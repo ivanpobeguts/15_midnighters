@@ -5,13 +5,17 @@ import pytz
 
 def load_attempts():
     base_url = 'https://devman.org/api/challenges/solution_attempts/'
-    number_of_pages = requests.get(base_url).json()['number_of_pages']
-    for page_number in range(1, number_of_pages + 1):
+    page_number = 0
+    while True:
+        page_number += 1
         payload = {'page': str(page_number)}
         users_attempts = requests.get(base_url, params=payload)
         page_records_data = users_attempts.json()
         for record in page_records_data['records']:
             yield record
+        number_of_pages = page_records_data['number_of_pages']
+        if page_number == number_of_pages:
+            break
 
 
 def get_midnighters(records):
