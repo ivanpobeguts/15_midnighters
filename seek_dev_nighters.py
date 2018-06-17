@@ -8,7 +8,7 @@ def load_attempts():
     page_number = 0
     while True:
         page_number += 1
-        payload = {'page': str(page_number)}
+        payload = {'page': page_number}
         users_attempts = requests.get(base_url, params=payload)
         page_records_data = users_attempts.json()
         for record in page_records_data['records']:
