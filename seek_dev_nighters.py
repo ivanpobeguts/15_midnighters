@@ -16,14 +16,14 @@ def load_attempts():
 
 def get_midnighters(records):
     midnighters = set()
-    start_time = dt.time(0, 0)
-    end_time = dt.time(7, 0)
+    start_hour = 0
+    end_hour = 7
     for record in records:
         user_time = (dt.datetime.fromtimestamp(
             record['timestamp'],
             pytz.timezone(record['timezone'])
-        ).time())
-        if start_time < user_time < end_time:
+        ).hour)
+        if start_hour < user_time < end_hour:
             midnighters.add(record['username'])
     return midnighters
 
