@@ -7,8 +7,9 @@ def load_attempts():
     base_url = 'https://devman.org/api/challenges/solution_attempts/'
     number_of_pages = requests.get(base_url).json()['number_of_pages']
     for page_number in range(1, number_of_pages + 1):
-        users_info = requests.get(base_url + '?page=' + str(page_number))
-        page_records_data = users_info.json()
+        payload = {'page': str(page_number)}
+        users_attempts = requests.get(base_url, params=payload)
+        page_records_data = users_attempts.json()
         for record in page_records_data['records']:
             yield record
 
